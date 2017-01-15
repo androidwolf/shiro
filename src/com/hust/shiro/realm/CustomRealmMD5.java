@@ -13,7 +13,6 @@ public class CustomRealmMD5 extends AuthorizingRealm {
 	
 	@Override
 	public void setName(String name) {
-		// TODO Auto-generated method stub
 		super.setName("customRealmMD5");
 	}
 

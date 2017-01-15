@@ -1,10 +1,14 @@
 package com.hust.shiro.realm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
@@ -45,7 +49,22 @@ public class CustomRealm extends AuthorizingRealm {
 	// 用于授权
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		return null;
+		
+		//principals获取主身份信息
+		//将getPrimaryPrincipal方法返回值强转为真实身份类型
+		String userCode = (String) principals.getPrimaryPrincipal();
+		
+		//根据身份信息获取权限信息
+		//模拟数据
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("user:create");
+		permissions.add("items:update");
+		
+		//查到权限数据，返回
+		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+		simpleAuthorizationInfo.addStringPermissions(permissions);
+		
+		return simpleAuthorizationInfo;
 	}
 
 }
